@@ -29,7 +29,8 @@ function introQuestions(){
                     'View All Roles',
                     'Add Role',
                     'View All Departments',
-                    'Add Department'
+                    'Add Department',
+                    'Quit'
                ]
            }
      ]
@@ -37,3 +38,11 @@ function introQuestions(){
      prompt (intQs)
 
 }
+
+// if response = 1 == display table EMPLOYEES
+// if response = 2 == update employee table
+// "" 3 == display table job_role
+// "" 4 == edit table employee, parameter role
+// "" 5 == display table department
+// "" 6 == edit table department, add new department
+// "" 7 == exit application (syntax == "quit;")
