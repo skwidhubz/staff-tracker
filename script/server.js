@@ -1,4 +1,29 @@
 // server file
+// import express js
+const express = require('express');
+// Import and require mysql2
+const mysql = require('mysql2');
+
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+// Express middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+// Connect to database
+const db = mysql.createConnection(
+  {
+    host: 'localhost',
+    // MySQL username,
+    user: 'root',
+    // MySQL password
+    password: 'password',
+    database: 'staff_tracker_db'
+  },
+  console.log(`Connected to the classlist_db database.`)
+);
+
 
 const inquirer = require('inquirer') //import inquirer package
 
@@ -21,28 +46,65 @@ function introQuestions(){
           {
                type: 'input',
                message: 'What would you like to do?',
-               name: 'school',
+               name: 'main',
                choices: [
-                    'View All Employees',
-                    'Add Employee',
-                    'Update Employee Role',
-                    'View All Roles',
-                    'Add Role',
-                    'View All Departments',
-                    'Add Department',
-                    'Quit'
+                    'View All Employees', // 0
+                    'Add Employee', // 1
+                    'Update Employee Role', // 2
+                    'View All Roles', // 3
+                    'Add Role', // 4
+                    'View All Departments', // 5
+                    'Add Department', // 6
+                    'Quit' // 7
                ]
            }
      ]
 
      prompt (intQs)
 
+     .then((response => {
+          if (response == "View All Employees"){
+               db.query('SELECT * FROM employee', function (err, results){
+                    console.log(results);
+               })
+
+          } else if (response == "Add Employee"){
+               addEmployee()
+
+          } else if (response == "Update Employee Role"){
+               updateEmployee()
+          } else if (response == "View All Roles"){
+               db.query('SELECT * FROM job_role', function (err, results){
+                    console.log(results);
+               })
+          } else if (response == "Add Role"){
+
+          } else if (response == "View All Departments"){
+               db.query('SELECT * FROM department', function (err, results){
+                    console.log(results);
+               })
+
+          } else if (response == "Add Department"){
+
+          } else if (response == response[7]){
+               db.query('quit;', function (err, results) {
+                      console.log("Byeee!")});
+
+          }
+
+     }));         
+     
+
 }
 
-// if response = 1 == display table EMPLOYEES
-// if response = 2 == update employee table
+// if response = 1 == display table EMPLOYEES //follow up with question
+// if response = 2 == update employee table and activate new question set
 // "" 3 == display table job_role
 // "" 4 == edit table employee, parameter role
 // "" 5 == display table department
 // "" 6 == edit table department, add new department
 // "" 7 == exit application (syntax == "quit;")
+
+// example SQL :: db.query('SELECT * FROM students', function (err, results) {
+//   console.log(results);
+

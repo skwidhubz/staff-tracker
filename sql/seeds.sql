@@ -20,9 +20,9 @@ VALUES  (1, "engineer", 50000, 1),
         (5, "call operator", 20000, 4),
         (6, "technician", 40000, 5);
 
-INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
+INSERT INTO employee (id, first_name, last_name, job_role_id, manager_id)
 VALUES  (1, "james", "davis", 6, 4),
         (2, "kelly", "slater", 5, 4),
         (3, "honey", "baker", 3),
         (4, "gittus", "hubbius", 1, 4),
-        
+
