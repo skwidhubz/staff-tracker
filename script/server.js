@@ -3,6 +3,8 @@
 const express = require('express');
 // Import and require mysql2
 const mysql = require('mysql2');
+// Import functions from SQL Function package
+const sqlFunks = require('./sql_funks')
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -25,7 +27,8 @@ const db = mysql.createConnection(
 );
 
 
-const inquirer = require('inquirer') //import inquirer package
+const inquirer = require('inquirer'); //import inquirer package
+const viewEmployees = require('./sql_funks');
 
 var yeebs = `
 
@@ -67,65 +70,43 @@ function introQuestions(){
 
           console.log("response received"); 
 
-          if (response == response[0]){
-               db.query('SELECT * FROM employee', function (err, results){
-                    console.log(results);
-               })
+          if (response.main == 'View All Employees'){
+               viewEmployees();
+               introQuestions();
 
-          } else if (response == response[1]){
-               addEmployee()
+          } else if (response.main == 'Add Employee'){
+               addEmployee();
+               introQuestions();
 
-               function addEmployee(){
-                    console.log("Add new employee");
-               }
+          } else if (response.main == 'Update Employee Role'){
+               updateEmployee();
+               introQuestions();
 
-          } else if (response == response[2]){
-               updateEmployee()
+          } else if (response.main == 'View All Roles'){
+               displayRoles();
+               introQuestions();
 
-               function updateEmployee(){
-                    console.log("update current employee");
-               }
+          } else if (response.main == 'Add Role'){
+               addRole();
+               introQuestions();
 
+          } else if (response.main == 'View All Departments'){
+               viewAllDepartments();
+               introQuestions();
 
-          } else if (response == response[3]){
+          } else if (response.main == 'Add Department'){
+               addNewDepartment();
+               introQuestions();
 
-               db.query('SELECT * FROM job_role', function (err, results){
-                    console.log(results);
-               })
-
-
-          } else if (response == response[4]){
-
-               addRole()
-
-               function addRole(){
-                    console.log("add a new role");
-               }
+          } else if (response.main == 'Quit'){
 
 
-          } else if (response == response[5]){
-
-               db.query('SELECT * FROM department', function (err, results){
-                    console.log(results);
-               })
-
-          } else if (response == response[6]){
-
-               console.log("add department");
-
-
-          } else if (response == response[7]){
-
-               db.query('quit;', function (err, results) {
-                      console.log("Byeee!")});
+                      
 
 
           } 
 
-     })
-     
-     // .then ( introQuestions));         
-)};
+     }))};
 
 introQuestions();
 
