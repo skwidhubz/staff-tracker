@@ -18,11 +18,11 @@ VALUES  (1, "engineer", 50000, 1),
         (3, "CEO", 100000, 3),
         (4, "manager", 80000, 3),
         (5, "call operator", 20000, 4),
-        (6, "technician", 40000, 5);
+        (6, "technician", 40000, 4);
 
 INSERT INTO employee (id, first_name, last_name, job_role_id, manager_id)
 VALUES  (1, "james", "davis", 6, 4),
         (2, "kelly", "slater", 5, 4),
-        (3, "honey", "baker", 3),
+        (3, "honey", "baker", 3, 2),
         (4, "gittus", "hubbius", 1, 4),
 

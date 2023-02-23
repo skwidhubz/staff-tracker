@@ -21,7 +21,7 @@ const db = mysql.createConnection(
     password: 'yeebs2023',
     database: 'staff_tracker_db'
   },
-  console.log(`Connected to the classlist_db database.`)
+  console.log(`Connected to the staff_tracker database.`)
 );
 
 
@@ -72,16 +72,12 @@ function introQuestions(){
                     console.log(results);
                })
 
-               introQuestions();
-
           } else if (response == response[1]){
                addEmployee()
 
                function addEmployee(){
                     console.log("Add new employee");
                }
-
-               introQuestions();
 
           } else if (response == response[2]){
                updateEmployee()
@@ -90,7 +86,6 @@ function introQuestions(){
                     console.log("update current employee");
                }
 
-               introQuestions();
 
           } else if (response == response[3]){
 
@@ -98,7 +93,6 @@ function introQuestions(){
                     console.log(results);
                })
 
-               introQuestions();
 
           } else if (response == response[4]){
 
@@ -108,7 +102,6 @@ function introQuestions(){
                     console.log("add a new role");
                }
 
-               introQuestions();
 
           } else if (response == response[5]){
 
@@ -116,24 +109,22 @@ function introQuestions(){
                     console.log(results);
                })
 
-               introQuestions();
-
           } else if (response == response[6]){
 
                console.log("add department");
-               
-               introQuestions();
+
 
           } else if (response == response[7]){
 
                db.query('quit;', function (err, results) {
                       console.log("Byeee!")});
 
-               introQuestions();
 
           } 
 
-     }));         
+     })
+     
+     .then ( introQuestions));         
 }
 
 introQuestions();
