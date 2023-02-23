@@ -124,8 +124,8 @@ function introQuestions(){
 
      })
      
-     .then ( introQuestions));         
-}
+     // .then ( introQuestions));         
+)};
 
 introQuestions();
 
