@@ -18,7 +18,7 @@ const db = mysql.createConnection(
     // MySQL username,
     user: 'root',
     // MySQL password
-    password: 'password',
+    password: 'yeebs2023',
     database: 'staff_tracker_db'
   },
   console.log(`Connected to the classlist_db database.`)
@@ -44,7 +44,7 @@ console.log("A CLI application to track employees in an organisation");
 function introQuestions(){
      const intQs = [
           {
-               type: 'input',
+               type: 'list',
                message: 'What would you like to do?',
                name: 'main',
                choices: [
@@ -60,42 +60,83 @@ function introQuestions(){
            }
      ]
 
-     prompt (intQs)
+     inquirer
+     .prompt (intQs)
 
      .then((response => {
-          if (response == "View All Employees"){
+
+          console.log("response received"); 
+
+          if (response == response[0]){
                db.query('SELECT * FROM employee', function (err, results){
                     console.log(results);
                })
 
-          } else if (response == "Add Employee"){
+               introQuestions();
+
+          } else if (response == response[1]){
                addEmployee()
 
-          } else if (response == "Update Employee Role"){
+               function addEmployee(){
+                    console.log("Add new employee");
+               }
+
+               introQuestions();
+
+          } else if (response == response[2]){
                updateEmployee()
-          } else if (response == "View All Roles"){
+
+               function updateEmployee(){
+                    console.log("update current employee");
+               }
+
+               introQuestions();
+
+          } else if (response == response[3]){
+
                db.query('SELECT * FROM job_role', function (err, results){
                     console.log(results);
                })
-          } else if (response == "Add Role"){
 
-          } else if (response == "View All Departments"){
+               introQuestions();
+
+          } else if (response == response[4]){
+
+               addRole()
+
+               function addRole(){
+                    console.log("add a new role");
+               }
+
+               introQuestions();
+
+          } else if (response == response[5]){
+
                db.query('SELECT * FROM department', function (err, results){
                     console.log(results);
                })
 
-          } else if (response == "Add Department"){
+               introQuestions();
+
+          } else if (response == response[6]){
+
+               console.log("add department");
+               
+               introQuestions();
 
           } else if (response == response[7]){
+
                db.query('quit;', function (err, results) {
                       console.log("Byeee!")});
 
-          }
+               introQuestions();
+
+          } 
 
      }));         
-     
-
 }
+
+introQuestions();
 
 // if response = 1 == display table EMPLOYEES //follow up with question
 // if response = 2 == update employee table and activate new question set
