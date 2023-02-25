@@ -1,11 +1,3 @@
--- INSERT INTO products (id, product_name, category_name)
--- VALUES (1, "spinach", "produce"),
---        (2, "peanut butter", "staples"),
---        (3, "peas-canned", "canned goods"),
---        (4, "ice cream", "frozen"),
---        (5, "potato chips", "snacks");
-       
-
 INSERT INTO  department (id, dep_name)
 VALUES  (1, "engineering"),
         (2, "sales"),
@@ -24,5 +16,6 @@ INSERT INTO employee (id, first_name, last_name, job_role_id, manager_id)
 VALUES  (1, "james", "davis", 6, 4),
         (2, "kelly", "slater", 5, 4),
         (3, "honey", "baker", 3, 2),
-        (4, "gittus", "hubbius", 1, 4),
+        (4, "gittus", "hubbius", 1, 4);
+        
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // server file
 // import express js
 const express = require('express');
@@ -5,6 +6,9 @@ const express = require('express');
 const mysql = require('mysql2');
 // Import functions from SQL Function package
 const sqlFunks = require('./sql_funks')
+// import dotenv
+require('dotenv').config();
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -15,17 +19,16 @@ app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
-  {
-    host: 'localhost',
-    // MySQL username,
-    user: 'root',
-    // MySQL password
-    password: 'yeebs2023',
-    database: 'staff_tracker_db'
-  },
-  console.log(`Connected to the staff_tracker database.`)
-);
-
+     {
+       host: 'localhost',
+       // MySQL username,
+       user: 'root',
+       // MySQL password
+       password: process.env.PASSWORD,
+       database: 'staff_tracker_db'
+     },
+     console.log(`Connected to the staff_tracker database.`)
+   );
 
 const inquirer = require('inquirer'); //import inquirer package
 const viewEmployees = require('./sql_funks');
@@ -71,31 +74,31 @@ function introQuestions(){
           console.log("response received"); 
 
           if (response.main == 'View All Employees'){
-               viewEmployees();
+               sqlFunks.viewEmployees();
                introQuestions();
 
           } else if (response.main == 'Add Employee'){
-               addEmployee();
+               sqlFunks.addEmployee();
                introQuestions();
 
           } else if (response.main == 'Update Employee Role'){
-               updateEmployee();
+               sqlFunks.updateEmployee();
                introQuestions();
 
           } else if (response.main == 'View All Roles'){
-               displayRoles();
+               sqlFunks.displayRoles();
                introQuestions();
 
           } else if (response.main == 'Add Role'){
-               addRole();
+               sqlFunks.addRole();
                introQuestions();
 
           } else if (response.main == 'View All Departments'){
-               viewAllDepartments();
+               sqlFunks.viewAllDepartments();
                introQuestions();
 
           } else if (response.main == 'Add Department'){
-               addNewDepartment();
+               sqlFunks.addNewDepartment();
                introQuestions();
 
           } else if (response.main == 'Quit'){
@@ -121,3 +124,4 @@ introQuestions();
 // example SQL :: db.query('SELECT * FROM students', function (err, results) {
 //   console.log(results);
 
+module.exports = db
