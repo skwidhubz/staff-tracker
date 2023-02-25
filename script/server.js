@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+require('dotenv').config()
+// console.log(process.env) // remove this after you've confirmed it is working
 // server file
 // import express js
 const express = require('express');
@@ -7,7 +9,7 @@ const mysql = require('mysql2');
 // Import functions from SQL Function package
 const sqlFunks = require('./sql_funks')
 // import dotenv
-require('dotenv').config();
+// require('dotenv').config();
 
 
 const PORT = process.env.PORT || 3001;
@@ -24,7 +26,8 @@ const db = mysql.createConnection(
        // MySQL username,
        user: 'root',
        // MySQL password
-       password: process.env.PASSWORD,
+     //   password: process.env.PASSWORD,
+       password: 'yeebs2023',
        database: 'staff_tracker_db'
      },
      console.log(`Connected to the staff_tracker database.`)
@@ -79,7 +82,7 @@ function introQuestions(){
 
           } else if (response.main == 'Add Employee'){
                sqlFunks.addEmployee();
-               introQuestions();
+               
 
           } else if (response.main == 'Update Employee Role'){
                sqlFunks.updateEmployee();
@@ -102,26 +105,16 @@ function introQuestions(){
                introQuestions();
 
           } else if (response.main == 'Quit'){
-
-
-                      
-
-
+               db.query('quit', function (err, results) {
+               console.log("quit application")});
           } 
 
      }))};
 
 introQuestions();
 
-// if response = 1 == display table EMPLOYEES //follow up with question
-// if response = 2 == update employee table and activate new question set
-// "" 3 == display table job_role
-// "" 4 == edit table employee, parameter role
-// "" 5 == display table department
-// "" 6 == edit table department, add new department
-// "" 7 == exit application (syntax == "quit;")
-
 // example SQL :: db.query('SELECT * FROM students', function (err, results) {
 //   console.log(results);
 
 module.exports = db
+module.exports = introQuestions

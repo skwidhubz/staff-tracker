@@ -1,4 +1,8 @@
 // eslint-disable
+// import dotenv
+// require('dotenv').config();
+
+// const inquirer2 = require('inquirer'); //import inquirer package
 
 const { up } = require("inquirer/lib/utils/readline");
 
@@ -6,8 +10,9 @@ const { up } = require("inquirer/lib/utils/readline");
 const express = require('express');
 // Import and require mysql2
 const mysql = require('mysql2');
-// import dotenv
-require('dotenv').config();
+const inquirer = require("inquirer");
+const { introQuestions } = require('./server.js');
+
 
 // Connect to database
 const db = mysql.createConnection(
@@ -16,7 +21,7 @@ const db = mysql.createConnection(
       // MySQL username,
       user: 'root',
       // MySQL password
-      password: process.env.PASSWORD,
+      password: 'yeebs2023',
       database: 'staff_tracker_db'
     },
     console.log(`Connected to the staff_tracker database.`)
@@ -36,6 +41,78 @@ function viewEmployees(){
 // ADD NEW EMPLOYEE
 function addEmployee(){
     console.log("Add new employee");
+
+    // const addEmployeeQuestions = [{
+    //             type: 'list',
+    //             message: 'What is the employee department?',
+    //             name: 'department',
+    //             choices: [
+    //                   'Engineering', 
+    //                   'Sales', 
+    //                   'Management', 
+    //                   'Support', 
+    //                     ]      
+    //          },
+    //          {  
+    //             type: 'input',
+    //             message: 'What is their salary?',
+    //             name: 'salary'
+    //          },
+    //          {
+    //             type: 'input',
+    //             message: 'What is the job role?',
+    //             name: 'role',
+    //          },
+    //          {
+    //             type: 'input',
+    //             message: 'First name?',
+    //             name: 'firstname',
+    //          },
+    //          {
+    //             type: 'input',
+    //             message: 'Last name?',
+    //             name: 'lastname',
+    //          }];
+    
+
+            //  console.log(addEmployeeQuestions);
+    inquirer
+    .prompt([{
+        type: 'list',
+        message: 'What is the employee department?',
+        name: 'department',
+        choices: [
+              'Engineering', 
+              'Sales', 
+              'Management', 
+              'Support', 
+                ]      
+     },
+     {  
+        type: 'input',
+        message: 'What is their salary?',
+        name: 'salary'
+     },
+     {
+        type: 'input',
+        message: 'What is the job role?',
+        name: 'role',
+     },
+     {
+        type: 'input',
+        message: 'First name?',
+        name: 'firstname',
+     },
+     {
+        type: 'input',
+        message: 'Last name?',
+        name: 'lastname',
+     }])
+    .then ((addEmpResponse) => {
+        console.log(addEmpResponse);
+        introQuestions();
+    });
+    // db.query('sql code')
 }
 
 // UPDATE EXISTING EMPLOYEE
