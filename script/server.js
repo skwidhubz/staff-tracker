@@ -116,5 +116,5 @@ introQuestions();
 // example SQL :: db.query('SELECT * FROM students', function (err, results) {
 //   console.log(results);
 
-module.exports = db
+// module.exports = db
 module.exports = introQuestions
