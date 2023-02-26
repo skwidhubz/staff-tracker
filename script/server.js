@@ -70,7 +70,7 @@ app.use(express.json());
                     (${response.role}, ${response.salary});
                     INSERT INTO department (dep_name) VALUES (${response.department});
                     `
-               db.query(addEmployeeQuery, function (err, results){
+               db.query(addEmployeeQuery, (err, results) => {
                     if (err) throw console.error(err);
                     introQuestions();
                })});
