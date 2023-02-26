@@ -61,20 +61,23 @@ app.use(express.json());
                },
                ])
                .then ((response) => {
-               console.log(response);
 
-               const addEmployeeQuery = `
-                    INSERT INTO employee (first_name, last_name) VALUES
-                    (${response.firstname}, ${response.lastname});
-                    INSERT INTO job_role (title, salary) VALUES 
-                    (${response.role}, ${response.salary});
-                    INSERT INTO department (dep_name) VALUES (${response.department});
-                    `
-               db.query(addEmployeeQuery, (err, results) => {
+                    const empSql = `INSERT INTO employee (first_name) VALUES (?)`;
+                    const params1 = [response.firstname];
+
+               // const addEmployeeQuery = ` INSERT INTO employee (first_name, last_name) VALUES (${response.firstname}, ${response.lastname});`
+               db.query(empSql, params1, (err, results) => {
                     if (err) throw console.error(err);
                     introQuestions();
-               })});
+               })
+          });
           };
+
+
+          // INSERT INTO job_role (title, salary) VALUES 
+          // (${response.role}, ${response.salary});
+          // INSERT INTO department (dep_name) VALUES (${response.department});
+
           
           // UPDATE EXISTING EMPLOYEE
           function updateEmployee(){
