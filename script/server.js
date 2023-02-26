@@ -1,17 +1,9 @@
-/* eslint-disable no-unused-vars */
-require('dotenv').config()
-// console.log(process.env) // remove this after you've confirmed it is working
-// server file
-// import express js
-const express = require('express');
-// Import and require mysql2
-const mysql = require('mysql2');
-// Import functions from SQL Function package
-const sqlFunks = require('./sql_funks')
-// import dotenv
-// require('dotenv').config();
-
-
+const { prompt } = require('inquirer');
+require('dotenv').config(); // import dotenv
+const cTable = require('console.table'); // import table view
+const express = require('express'); // import express js
+const mysql = require('mysql2'); // Import and require mysql2
+const db = require('./connection.js'); // Import db function
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -19,22 +11,127 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Connect to database
-const db = mysql.createConnection(
-     {
-       host: 'localhost',
-       // MySQL username,
-       user: 'root',
-       // MySQL password
-     //   password: process.env.PASSWORD,
-       password: 'yeebs2023',
-       database: 'staff_tracker_db'
-     },
-     console.log(`Connected to the staff_tracker database.`)
-   );
+// MODULE FUNCTIONS PER INTRO QUESTION CHOICES
 
-const inquirer = require('inquirer'); //import inquirer package
-const viewEmployees = require('./sql_funks');
+          // VIEW ALL EMPLOYEES
+          function viewEmployees(){
+               db.query('SELECT * FROM employee', function (err, results){
+                    console.log(results);
+                    if (err) throw console.error(err);
+                    introQuestions();
+               })};
+          
+          // ADD NEW EMPLOYEE
+          function addEmployee(){
+               console.log("Add new employee");
+          
+               // inquirer
+               prompt([
+               {
+                    type: 'list',
+                    message: 'What is the employee department?',
+                    name: 'department',
+                    choices: [
+                         'Engineering', 
+                         'Sales', 
+                         'Management', 
+                         'Support', 
+                              ]      
+               },
+               {  
+                    type: 'input',
+                    message: 'What is their salary?',
+                    name: 'salary'
+               },
+               {
+                    type: 'input',
+                    message: 'What is the job role?',
+                    name: 'role',
+               },
+               {
+                    type: 'input',
+                    message: 'First name?',
+                    name: 'firstname',
+               },
+               {
+                    type: 'input',
+                    message: 'Last name?',
+                    name: 'lastname',
+               },
+               {
+                    type: 'input',
+                    message: 'Manager ID? (1,2,3,4)',
+                    name: 'lastname',
+               }
+               ])
+               .then ((addEmpResponse) => {
+               console.log(addEmpResponse);
+
+               const addEmployeeQuery = `
+                    INSERT INTO employee (id, first_name, last_name, job_role_id)`
+          
+               db.query('INSERT INTO employee (id, fist_name, last_name, job_role_id')
+          
+               introQuestions();
+               });
+               // db.query('sql code')
+          }
+          
+          // UPDATE EXISTING EMPLOYEE
+          function updateEmployee(){
+               console.log("update current employee");
+          }
+          
+          // DISPLAY ALL ROLES
+          function displayRoles(){
+               db.query('SELECT * FROM job_role', function (err, results){
+                    console.log(results);
+                    if (err) throw console.error(err);
+                    introQuestions();
+               })
+          }
+          
+          // ADD ROLE
+          function addRole(){
+               console.log("add a new role");
+               inquirer
+               .prompt([
+               {  
+               type: 'input',
+               message: 'What department does the new role exist in?',
+               name: 'department'
+               },
+               {
+               type: 'input',
+               message: 'What is the new job role?',
+               name: 'role',
+               }])
+               .then ((addRoleResponse) => {
+               console.log(addRoleResponse);
+               introQuestions();
+               });
+          }
+          
+          // VIEW ALL DEPARTMENTS
+          function viewAllDepartments (){
+               db.query('SELECT * FROM department', function (err, results){
+                    console.log(results);
+                    if (err) throw console.error(err);
+                    introQuestions();
+               })}
+          
+          // ADD NEW DEPARTMENT
+          function addNewDepartment(){
+               console.log("add department");
+          }
+          
+          // EXIT APPLICATION
+          function exitApplication(){
+          db.query('quit;', function (err, results) {
+               console.log("Byeee!")})
+          }
+
+          // END FUNCTIONS FOR QUESTION SET
 
 var yeebs = `
 
@@ -43,15 +140,20 @@ var yeebs = `
 ███████    ██    ███████ █████   █████          ██    ██████  ███████ ██      █████   █████   ██████  
      ██    ██    ██   ██ ██      ██             ██    ██   ██ ██   ██ ██      ██  ██  ██      ██   ██ 
 ███████    ██    ██   ██ ██      ██             ██    ██   ██ ██   ██  ██████ ██   ██ ███████ ██   ██ 
+______________________________________________________________________________________________________
 
 `
 
-console.log(yeebs);
+console.log("\x1b[32m", yeebs);
 
-console.log("A CLI application to track employees in an organisation");
+console.log("\x1b[42m","\x1b[30m", "A CLI application to track employees in an organisation", "\x1b[0m");
 
 function introQuestions(){
-     const intQs = [
+
+     // inquirer
+
+
+     prompt([
           {
                type: 'list',
                message: 'What would you like to do?',
@@ -67,54 +169,53 @@ function introQuestions(){
                     'Quit' // 7
                ]
            }
-     ]
-
-     inquirer
-     .prompt (intQs)
+     ])
 
      .then((response => {
 
           console.log("response received"); 
 
           if (response.main == 'View All Employees'){
-               sqlFunks.viewEmployees();
+               viewEmployees();
                introQuestions();
-
-          } else if (response.main == 'Add Employee'){
-               sqlFunks.addEmployee();
-               
-
-          } else if (response.main == 'Update Employee Role'){
-               sqlFunks.updateEmployee();
-               introQuestions();
-
-          } else if (response.main == 'View All Roles'){
-               sqlFunks.displayRoles();
-               introQuestions();
-
-          } else if (response.main == 'Add Role'){
-               sqlFunks.addRole();
-               introQuestions();
-
-          } else if (response.main == 'View All Departments'){
-               sqlFunks.viewAllDepartments();
-               introQuestions();
-
-          } else if (response.main == 'Add Department'){
-               sqlFunks.addNewDepartment();
-               introQuestions();
-
-          } else if (response.main == 'Quit'){
-               db.query('quit', function (err, results) {
-               console.log("quit application")});
+          } 
+          
+          if (response.main == 'Add Employee'){
+               addEmployee();
           } 
 
-     }))};
+          if (response.main == 'Update Employee Role'){
+               updateEmployee();
+               introQuestions();
+          } 
+
+          if (response.main == 'View All Roles'){
+               displayRoles();
+               introQuestions();
+          }
+          
+          if (response.main == 'Add Role'){
+               addRole();
+               introQuestions();
+          } 
+          
+          if (response.main == 'View All Departments'){
+               viewAllDepartments();
+               introQuestions();
+          } 
+          
+          if (response.main == 'Add Department'){
+               addNewDepartment();
+               introQuestions();
+          } 
+          
+          if (response.main == 'Quit'){
+              exitApplication();
+          }
+     }
+     ));}
 
 introQuestions();
 
-// example SQL :: db.query('SELECT * FROM students', function (err, results) {
-//   console.log(results);
-
 // module.exports = db
-module.exports = introQuestions
+// module.exports = introQuestions;
