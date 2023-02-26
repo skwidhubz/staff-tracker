@@ -4,6 +4,7 @@ const cTable = require('console.table'); // import table view
 const express = require('express'); // import express js
 const mysql = require('mysql2'); // Import and require mysql2
 const db = require('./connection.js'); // Import db function
+const { response } = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(express.json());
           // VIEW ALL EMPLOYEES
           function viewEmployees(){
                db.query('SELECT * FROM employee', function (err, results){
-                    console.log(results);
+                    console.table(results);
                     if (err) throw console.error(err);
                     introQuestions();
                })};
@@ -38,15 +39,15 @@ app.use(express.json());
                          'Support', 
                               ]      
                },
-               {  
-                    type: 'input',
-                    message: 'What is their salary?',
-                    name: 'salary'
-               },
                {
                     type: 'input',
                     message: 'What is the job role?',
                     name: 'role',
+               },
+               {
+                    type: 'input',
+                    message: 'What is the salary?',
+                    name: 'salary',
                },
                {
                     type: 'input',
@@ -58,38 +59,36 @@ app.use(express.json());
                     message: 'Last name?',
                     name: 'lastname',
                },
-               {
-                    type: 'input',
-                    message: 'Manager ID? (1,2,3,4)',
-                    name: 'lastname',
-               }
                ])
-               .then ((addEmpResponse) => {
-               console.log(addEmpResponse);
+               .then ((response) => {
+               console.log(response);
 
                const addEmployeeQuery = `
-                    INSERT INTO employee (id, first_name, last_name, job_role_id)`
-          
-               db.query('INSERT INTO employee (id, fist_name, last_name, job_role_id')
-          
-               introQuestions();
-               });
-               // db.query('sql code')
-          }
+                    INSERT INTO employee (first_name, last_name) VALUES
+                    (${response.firstname}, ${response.lastname});
+                    INSERT INTO job_role (title, salary) VALUES 
+                    (${response.role}, ${response.salary});
+                    INSERT INTO department (dep_name) VALUES (${response.department});
+                    `
+               db.query(addEmployeeQuery, function (err, results){
+                    if (err) throw console.error(err);
+                    introQuestions();
+               })});
+          };
           
           // UPDATE EXISTING EMPLOYEE
           function updateEmployee(){
                console.log("update current employee");
-          }
+          };
           
           // DISPLAY ALL ROLES
           function displayRoles(){
                db.query('SELECT * FROM job_role', function (err, results){
-                    console.log(results);
+                    console.table(results);
                     if (err) throw console.error(err);
                     introQuestions();
                })
-          }
+          };
           
           // ADD ROLE
           function addRole(){
@@ -110,26 +109,26 @@ app.use(express.json());
                console.log(addRoleResponse);
                introQuestions();
                });
-          }
+          };
           
           // VIEW ALL DEPARTMENTS
           function viewAllDepartments (){
                db.query('SELECT * FROM department', function (err, results){
-                    console.log(results);
+                    console.table(results);
                     if (err) throw console.error(err);
                     introQuestions();
-               })}
+               })};
           
           // ADD NEW DEPARTMENT
           function addNewDepartment(){
                console.log("add department");
-          }
+          };
           
           // EXIT APPLICATION
           function exitApplication(){
           db.query('quit;', function (err, results) {
                console.log("Byeee!")})
-          }
+          };
 
           // END FUNCTIONS FOR QUESTION SET
 
@@ -142,7 +141,7 @@ var yeebs = `
 ███████    ██    ██   ██ ██      ██             ██    ██   ██ ██   ██  ██████ ██   ██ ███████ ██   ██ 
 ______________________________________________________________________________________________________
 
-`
+`;
 
 console.log("\x1b[32m", yeebs);
 

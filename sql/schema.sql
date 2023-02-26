@@ -4,12 +4,12 @@ CREATE DATABASE staff_tracker_db;
 USE staff_tracker_db;
 
 CREATE TABLE department (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     dep_name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE job_role (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL NOT NULL,
     department_id INT,
@@ -17,7 +17,7 @@ CREATE TABLE job_role (
 );
 
 CREATE TABLE employee (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     job_role_id INT,
