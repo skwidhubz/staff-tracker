@@ -145,7 +145,7 @@ ________________________________________________________________________________
 
 console.log("\x1b[32m", yeebs);
 
-console.log("\x1b[42m","\x1b[30m", "A CLI application to track employees in an organisation", "\x1b[0m");
+console.log(`\x1b[42m" "\x1b[30m" ..:: A CLI application to track employees in an organisation ::.. "\x1b[0m`);
 
 function introQuestions(){
 
