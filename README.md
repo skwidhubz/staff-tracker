@@ -1,18 +1,29 @@
-# Employee Tracker - SQL
 
-### A command-line application to manage a company's employee database, using Node.js, Inquirer, and MySQL.
-
-
+# Staff-Tracker SQL Project
+![GitHub license](https://img.shields.io/badge/license-MIT-blue)    
 
 ![Screenshot_20230226_091759](https://user-images.githubusercontent.com/81959922/221404772-d98a6a6e-d38c-48c9-b1c7-5c892aec7c97.png)
 
-
-This application allows the user to view and alter the SQL database, via the command line. Users can view employees, departments and job roles. In addition to this there are functions to add an employee, department, and job role. 
-
-Prior to running the application please ensure all dependencies are installed with the command: "npm install".
-
-The application can be run in the command line of the directory with the following command: "node server.js".
-
-NOTE: The sql user and password fields are accessed via a dotEnv file so make sure to create your own with USER and PASSWORD.
-
-Coded by lordRadias.
+## Table of Contents                      
+- [Project description](#description)
+- [Installation](#installation)
+- [License](#license)
+- [Command](#command)
+- [Contributors](#contributors)
+- [Tests](#tests)
+- [Questions](#questions)
+## Description
+This CLI application allows the user to access and modify a database of employees, departments and job roles within a company. 
+## Installation
+The dependencies required for this project are: Inquirer, MySql2, Express, DotEnv
+## Command
+The command line execution is: node server.js 
+## Contributors
+T.Parker contributed to this project.
+## Tests
+Run this command undefined to initiate a test.
+## Questions
+- My GitHub page: (https://github.com/skwidhubz)
+- Please contact me at: tom@internet.com
+## License
+MIT

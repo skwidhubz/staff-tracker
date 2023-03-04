@@ -11,7 +11,7 @@ const db = mysql.createConnection(
       password: process.env.PASSWORD,
       database: 'staff_tracker_db'
     },
-    console.log(`Connected to the staff_tracker database 2.`)
+    console.log(`Connected to the staff_tracker database via dotEnv credentials.`)
   );
 
 
